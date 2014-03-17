@@ -161,6 +161,9 @@ namespace D3Test
             {
                 lblTimeToLevel.Text = t.Minutes.ToString("n0") + "m " + t.Seconds.ToString("n0") + "s";
             }
+
+            if (frmOverlay.Visible)
+                frmOverlay.SetTimeToLvl(lblTimeToLevel.Text);
         }
 
         private void LoadTimeToXXX(double XpHour, long CurrentXp, int CurrentPLvl)
@@ -218,7 +221,7 @@ namespace D3Test
 
                 return TotalXp;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }
@@ -363,83 +366,70 @@ namespace D3Test
 
             if (PoolOfReflection)
             {
-                Rectangle rec;
-                if (bip.Height == 1080 && bip.Width == 1920)
-                    rec = new Rectangle(762, 808, 395, 35);
+                string Width = ConfigurationManager.AppSettings["Width"].ToString();
+                string Height = ConfigurationManager.AppSettings["Height"].ToString();
+                string X = ConfigurationManager.AppSettings["X_Pool"].ToString();
+                string Y = ConfigurationManager.AppSettings["Y_Pool"].ToString();
+
+                int intX;
+                int intY;
+                int intWidth;
+                int intHeight;
+
+                Int32.TryParse(X, out intX);
+                Int32.TryParse(Y, out intY);
+                Int32.TryParse(Width, out intWidth);
+                Int32.TryParse(Height, out intHeight);
+
+                if (intX > 0 && intY > 0 && intWidth > 0 && intHeight > 0)
+                    return new Rectangle(intX, intY, intWidth, intHeight);
+                else if (bip.Height == 1080 && bip.Width == 1920)
+                    return new Rectangle(762, 808, 395, 35);
                 else if ((bip.Height == 1050 || bip.Height == 1056) && bip.Width == 1680)
-                    rec = new Rectangle(643, 783, 395, 34);
+                    return new Rectangle(643, 783, 395, 34);
                 else if (bip.Height == 768 && (bip.Width == 1368 || bip.Width == 1360))
-                    rec = new Rectangle(530, 570, 303, 22);
+                    return new Rectangle(530, 570, 303, 22);
                 else if (bip.Height == 1440 && bip.Width == 2560)
-                    rec = new Rectangle(1031, 1210, 502, 40);
+                    return new Rectangle(1006, 1077, 547, 40);
                 else
                 {
-                    string Width = ConfigurationManager.AppSettings["Width"].ToString();
-                    string Height = ConfigurationManager.AppSettings["Height"].ToString();
-                    string X = ConfigurationManager.AppSettings["X_Pool"].ToString();
-                    string Y = ConfigurationManager.AppSettings["Y_Pool"].ToString();
-
-                    int intX;
-                    int intY;
-                    int intWidth;
-                    int intHeight;
-                    
-                    Int32.TryParse(X, out intX);
-                    Int32.TryParse(Y, out intY);
-                    Int32.TryParse(Width, out intWidth);
-                    Int32.TryParse(Height, out intHeight);
-
-                    if (intX > 0 && intY > 0 && intWidth > 0 && intHeight > 0)
-                    {
-                        rec = new Rectangle(intX, intY, intWidth, intHeight);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Unknown Screenshot resolution. Please read SetupResolution.pdf !!!");
-                        return new Rectangle();
-                    }
+                    MessageBox.Show("Unknown Screenshot resolution. Please read SetupResolution.pdf !!!");
+                    return new Rectangle();
                 }
-
-                return rec;
             }
             else
             {
-                Rectangle rec;
-                if (bip.Height == 1080 && bip.Width == 1920)
-                    rec = new Rectangle(762, 908, 395, 35);
-                else if ((bip.Height == 1050 || bip.Height == 1056) && bip.Width == 1680)
-                    rec = new Rectangle(643, 881, 395, 34);
-                else if (bip.Height == 768 && (bip.Width == 1368 || bip.Width == 1360))
-                    rec = new Rectangle(530, 645, 303, 20);
-                else if (bip.Height == 1440 && bip.Width == 2560)
-                    rec = new Rectangle(1031, 1210, 502, 40);
-                else
-                {
-                    string X = ConfigurationManager.AppSettings["X"].ToString();
-                    string Y = ConfigurationManager.AppSettings["Y"].ToString();
-                    string Width = ConfigurationManager.AppSettings["Width"].ToString();
-                    string Height = ConfigurationManager.AppSettings["Height"].ToString();
-                    int intX;
-                    int intY;
-                    int intWidth;
-                    int intHeight;
-                    Int32.TryParse(X, out intX);
-                    Int32.TryParse(Y, out intY);
-                    Int32.TryParse(Width, out intWidth);
-                    Int32.TryParse(Height, out intHeight);
+                string X = ConfigurationManager.AppSettings["X"].ToString();
+                string Y = ConfigurationManager.AppSettings["Y"].ToString();
+                string Width = ConfigurationManager.AppSettings["Width"].ToString();
+                string Height = ConfigurationManager.AppSettings["Height"].ToString();
+                int intX;
+                int intY;
+                int intWidth;
+                int intHeight;
+                Int32.TryParse(X, out intX);
+                Int32.TryParse(Y, out intY);
+                Int32.TryParse(Width, out intWidth);
+                Int32.TryParse(Height, out intHeight);
 
-                    if (intX > 0 && intY > 0 && intWidth > 0 && intHeight > 0)
-                    {
-                        rec = new Rectangle(intX, intY, intWidth, intHeight);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Unknown Screenshot resolution. Please read SetupResolution.pdf !!!");
-                        return new Rectangle();
-                    }
+                if (intX > 0 && intY > 0 && intWidth > 0 && intHeight > 0)
+                {
+                    return new Rectangle(intX, intY, intWidth, intHeight);
                 }
 
-                return rec;
+                if (bip.Height == 1080 && bip.Width == 1920)
+                    return new Rectangle(762, 908, 395, 35);
+                else if ((bip.Height == 1050 || bip.Height == 1056) && bip.Width == 1680)
+                    return new Rectangle(643, 881, 395, 34);
+                else if (bip.Height == 768 && (bip.Width == 1368 || bip.Width == 1360))
+                    return new Rectangle(530, 645, 303, 20);
+                else if (bip.Height == 1440 && bip.Width == 2560)
+                    return new Rectangle(1006, 1210, 547, 40);
+                else
+                {
+                    MessageBox.Show("Unknown Screenshot resolution. Please read SetupResolution.pdf !!!");
+                    return new Rectangle();
+                }
             }
         }
 
@@ -481,8 +471,8 @@ namespace D3Test
                         return -100;
 
                     Bitmap bipNew = bip.Clone(rec, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                    bipNew = ResizeBitmap(bipNew, bipNew.Width * 8, bipNew.Height * 8);
                     InvertBip(bipNew);
-                    bipNew = ResizeBitmap(bipNew, bipNew.Width * 15, bipNew.Height * 15);
                     bipNew.Save(SmallFileName);
                 }
 
@@ -504,7 +494,7 @@ namespace D3Test
                     }
                 }
 
-                if ((list.Count == 1 && !PoolOfReflection) || (!list[3].Text.Contains("Experience") && !PoolOfReflection))
+                if ((list.Count == 1 && !PoolOfReflection) || (list.Count > 3 && !list[3].Text.ToLower().Contains("ex") && !PoolOfReflection))
                 {
                     // Pool of reflection
                     File.Delete(SmallFileName);
@@ -512,7 +502,7 @@ namespace D3Test
                 }
                 else
                 {
-                    if (list.Count >= 4 && list[3].Text.Contains("Experience"))
+                    if (list.Count >= 4 && list[3].Text.ToLower().Contains("ex"))
                     {
                         currentXP = list[4].Text;
 
@@ -532,7 +522,9 @@ namespace D3Test
                         currentXP = currentXP.Replace("B", "8");
                         currentXP = currentXP.Replace("G", "6");
                         currentXP = currentXP.Replace("O", "0");
+                        currentXP = currentXP.Replace("-", "");
                         currentXP = currentXP.Replace(",", "");
+                        currentXP = currentXP.Replace(" ", "");
 
                         // ParaLvl
                         Int32 intTempPara;
@@ -573,7 +565,7 @@ namespace D3Test
             return ress;
         }
 
-        private void btnReload_Click(object sender, EventArgs e)
+        private void LoadScreens()
         {
             try
             {
@@ -601,7 +593,10 @@ namespace D3Test
                 long EndXp = GetXpFromSS(Filer[Filer.Length - 1], ref EndParaLvl, false, ref tempRefXP_End);
 
                 if (StartXp == -100 || EndXp == -100)
+                {
+                    frmOverlay.ShowBlank(true);
                     return;
+                }
 
                 if (cbAllways.Checked || StartParaLvl == 0 || EndParaLvl == 0 || StartXp < 100000 || EndXp < 100000)
                 {
@@ -609,6 +604,12 @@ namespace D3Test
                     string SSBwEnd = Diablo3Monitor + "\\" + Path.GetFileName(Filer[Filer.Length - 1]) + "_BW.bmp";
 
                     FrmOCR ocrForm = new FrmOCR(StartParaLvl, EndParaLvl, StartXp, EndXp, SSBWStart, SSBwEnd, tempRefXP_Start, tempRefXP_End);
+
+                    if (frmOverlay.Visible)
+                    {
+                        frmOverlay.ShowWarning(true);
+                    }
+
                     DialogResult drRes = ocrForm.ShowDialog();
 
                     if (drRes == System.Windows.Forms.DialogResult.OK)
@@ -620,9 +621,14 @@ namespace D3Test
 
                         ocrForm.ClosePic();
                         ocrForm.Dispose();
+
+                        frmOverlay.ShowWarning(false);
                     }
                     else
+                    {
+                        frmOverlay.ShowWarning(false);
                         return;
+                    }
                 }
 
                 DateTime StartTid = File.GetLastWriteTime(Filer[Filer.Length - 2]);
@@ -642,7 +648,7 @@ namespace D3Test
                     TotalXP = (PLVL[StartParaLvl + 1] - StartXp);
 
                     // Next add all of the lvls, except the last one
-                    for (int i = 0; i < lvls -1; i++)
+                    for (int i = 0; i < lvls - 1; i++)
                     {
                         int pIndex = (StartParaLvl + 1) + (i + 1);
                         TotalXP += PLVL[pIndex];
@@ -651,14 +657,20 @@ namespace D3Test
                     // Add last level xp
                     TotalXP += EndXp;
                 }
-               
+
                 TimeSpan t = EndTid - StartTid;
                 double RunMin = t.TotalSeconds / 60;
                 double XpHour = (TotalXP / RunMin) * 60;
 
-                System.IO.StreamWriter file = new System.IO.StreamWriter(Diablo3Monitor + "//Stats.txt", true);
-                file.WriteLine(StartXp + ";" + EndXp + ";" + StartTid + ";" + EndTid + ";" + TotalXP + ";" + XpHour + ";" + StartParaLvl.ToString() + ";" + EndParaLvl.ToString());
-                file.Close();
+                if (TotalXP > 0)
+                {
+                    if (frmOverlay.Visible)
+                        frmOverlay.SetText(t.ToString(), (XpHour / 1000000).ToString("n3") + " mil");
+
+                    System.IO.StreamWriter file = new System.IO.StreamWriter(Diablo3Monitor + "//Stats.txt", true);
+                    file.WriteLine(StartXp + ";" + EndXp + ";" + StartTid + ";" + EndTid + ";" + TotalXP + ";" + XpHour + ";" + StartParaLvl.ToString() + ";" + EndParaLvl.ToString());
+                    file.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -667,6 +679,11 @@ namespace D3Test
 
             LoadLastRun(0);
             LoadGrid();
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            LoadScreens();
         }
 
         private void btnOCR_Click(object sender, EventArgs e)
@@ -703,8 +720,11 @@ namespace D3Test
         {
             if (dataGridView1.SelectedRows != null && dataGridView1.SelectedRows.Count > 0)
             {
-                int index = dataGridView1.SelectedRows[0].Index;
-                LoadLastRun(index);
+                if (dataGridView1.SelectedRows.Count > 0)
+                {
+                    int index = dataGridView1.SelectedRows[0].Index;
+                    LoadLastRun(index);
+                }
             }
         }
 
@@ -2223,12 +2243,61 @@ namespace D3Test
             int ParaLvl = 0;
             Int32.TryParse(txtTimeTo.Text, out ParaLvl);
 
-            int index = dataGridView1.CurrentCell.RowIndex;
+            if (dataGridView1.Rows.Count > 0)
+            {
+                int index = dataGridView1.CurrentCell.RowIndex;
 
-            if (ParaLvl > 1500)
-                MessageBox.Show("Supported paragon levels are 1-1500");
+                if (ParaLvl > 1500)
+                    MessageBox.Show("Supported paragon levels are 1-1500");
+                else
+                    LoadLastRun(index);
+            }
+        }
+
+        FileSystemWatcher watcher = new FileSystemWatcher();
+        Overlay frmOverlay = new Overlay();
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                string Diablo3SSPath;
+                if (ConfigurationManager.AppSettings["Diablo3SSPath"].ToString().Length > 0)
+                    Diablo3SSPath = ConfigurationManager.AppSettings["Diablo3SSPath"].ToString();
+                else
+                    Diablo3SSPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Diablo III\\Screenshots\\";
+
+                watcher.Path = Diablo3SSPath;
+                watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.FileName | NotifyFilters.LastWrite;
+                watcher.Filter = "*.*";
+                watcher.SynchronizingObject = this;
+                watcher.Created += watcher_Created;
+                watcher.EnableRaisingEvents = true;
+            }
+        }
+
+        void watcher_Created(object sender, FileSystemEventArgs e)
+        {
+            watcher.EnableRaisingEvents = false;
+
+            System.Threading.Thread.Sleep(200);
+            LoadScreens();
+
+            watcher.EnableRaisingEvents = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (btnOverlay.Text == "Show overlay")
+            {
+                frmOverlay.Show();
+                btnOverlay.Text = "Hide overlay";
+            }
             else
-                LoadLastRun(index);
+            {
+                frmOverlay.Hide();
+                btnOverlay.Text = "Show overlay";
+            }
         }
     }
 

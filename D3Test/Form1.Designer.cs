@@ -57,10 +57,12 @@
             this.lblBestRun = new System.Windows.Forms.Label();
             this.lblTimeToXXX = new System.Windows.Forms.Label();
             this.lblTimeToLevel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.cbAllways = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnOverlay = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -121,9 +123,9 @@
             this.btnReload.BackColor = System.Drawing.Color.LawnGreen;
             this.btnReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReload.ForeColor = System.Drawing.Color.Black;
-            this.btnReload.Location = new System.Drawing.Point(495, 466);
+            this.btnReload.Location = new System.Drawing.Point(481, 466);
             this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(110, 24);
+            this.btnReload.Size = new System.Drawing.Size(124, 24);
             this.btnReload.TabIndex = 3;
             this.btnReload.Text = "Load screens";
             this.btnReload.UseVisualStyleBackColor = false;
@@ -227,9 +229,9 @@
             // 
             // btnOCR
             // 
-            this.btnOCR.Location = new System.Drawing.Point(19, 466);
+            this.btnOCR.Location = new System.Drawing.Point(193, 467);
             this.btnOCR.Name = "btnOCR";
-            this.btnOCR.Size = new System.Drawing.Size(75, 23);
+            this.btnOCR.Size = new System.Drawing.Size(45, 23);
             this.btnOCR.TabIndex = 9;
             this.btnOCR.Text = "OCR";
             this.btnOCR.UseVisualStyleBackColor = true;
@@ -368,20 +370,10 @@
             this.lblTimeToLevel.TabIndex = 6;
             this.lblTimeToLevel.Text = "[...]";
             // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(523, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(92, 26);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // cbAllways
             // 
             this.cbAllways.AutoSize = true;
-            this.cbAllways.Location = new System.Drawing.Point(186, 471);
+            this.cbAllways.Location = new System.Drawing.Point(247, 471);
             this.cbAllways.Name = "cbAllways";
             this.cbAllways.Size = new System.Drawing.Size(228, 17);
             this.cbAllways.TabIndex = 13;
@@ -409,11 +401,45 @@
             this.label12.TabIndex = 15;
             this.label12.Text = "Patch 2.0.1.22274";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Location = new System.Drawing.Point(19, 471);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(82, 17);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "Automode";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // btnOverlay
+            // 
+            this.btnOverlay.Location = new System.Drawing.Point(101, 467);
+            this.btnOverlay.Name = "btnOverlay";
+            this.btnOverlay.Size = new System.Drawing.Size(88, 23);
+            this.btnOverlay.TabIndex = 17;
+            this.btnOverlay.Text = "Show overlay";
+            this.btnOverlay.UseVisualStyleBackColor = true;
+            this.btnOverlay.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(523, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(92, 26);
+            this.button1.TabIndex = 12;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(620, 502);
+            this.ClientSize = new System.Drawing.Size(620, 496);
+            this.Controls.Add(this.btnOverlay);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.cbAllways);
@@ -428,7 +454,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Diablo 3 XP Monitor - Version 2.0";
+            this.Text = "Diablo 3 XP Monitor - Version 2.1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -474,6 +500,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtTimeTo;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btnOverlay;
     }
 }
 
